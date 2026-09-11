@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { DonationCard } from '@/components/donations/donation-card';
-import { Screen } from '@/components/ui/screen';
+import { Screen } from '@/ui';
 import { AppColors } from '@/constants/theme';
 import { useApp } from '@/context/app-context';
 const filters = ['All nearby', 'Vegetarian', 'Urgent', 'Large groups'] as const;

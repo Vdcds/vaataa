@@ -1,8 +1,7 @@
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 import { DonationCard } from '@/components/donations/donation-card';
-import { PrimaryButton, SecondaryButton } from '@/components/ui/buttons';
-import { Screen } from '@/components/ui/screen';
+import { PrimaryButton, Screen, SecondaryButton } from '@/ui';
 import { AppColors, Layout } from '@/constants/theme';
 import { useApp } from '@/context/app-context';
 export default function NgoHome() { const router = useRouter(); const { donations, setRole } = useApp(); const available = donations.filter((item) => item.status === 'posted'); const openDonorMock = () => { setRole('donor'); router.replace('/donor/home' as never); }; return <Screen eyebrow="Rescue desk" title="Food nearby needs a next stop." subtitle="Review surplus food, then take the rescue one clear step at a time."><View style={styles.summary}><View><Text style={styles.number}>{available.length}</Text><Text style={styles.caption}>available rescues</Text></View><View style={styles.rule} /><View><Text style={styles.number}>2</Text><Text style={styles.caption}>ready today</Text></View></View><PrimaryButton label="Browse all listings" onPress={() => router.push('/ngo/listings' as never)} /><SecondaryButton label="Preview donor workflow" onPress={openDonorMock} /><Text style={styles.section}>Nearest available</Text>{available.slice(0, 2).map((donation) => <DonationCard key={donation.id} donation={donation} onPress={() => router.push(`/ngo/listings/${donation.id}` as never)} />)}</Screen>; }

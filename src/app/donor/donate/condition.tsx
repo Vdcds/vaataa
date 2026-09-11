@@ -1,7 +1,5 @@
 import { useRouter } from 'expo-router';
-import { PrimaryButton, SecondaryButton } from '@/components/ui/buttons';
-import { ChoiceRow, TextField } from '@/components/ui/fields';
-import { Screen } from '@/components/ui/screen';
+import { ChoiceRow, PrimaryButton, Screen, SecondaryButton, TextField } from '@/ui';
 import { useApp } from '@/context/app-context';
 export default function ConditionScreen() {
   const router = useRouter(); const { draft, updateDraft } = useApp();

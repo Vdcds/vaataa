@@ -1,7 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
-import { PrimaryButton } from '@/components/ui/buttons';
-import { Screen } from '@/components/ui/screen';
+import { PrimaryButton, Screen } from '@/ui';
 import { AppColors } from '@/constants/theme';
 import { useApp } from '@/context/app-context';
 export default function DonationSuccessScreen() {

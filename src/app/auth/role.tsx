@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { Screen } from '@/components/ui/screen';
+import { Screen } from '@/ui';
 import { AppColors, Layout } from '@/constants/theme';
 import { useApp } from '@/context/app-context';
 import type { UserRole } from '@/types/domain';

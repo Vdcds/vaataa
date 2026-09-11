@@ -1,9 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Text } from 'react-native';
-import { PrimaryButton, SecondaryButton } from '@/components/ui/buttons';
-import { TextField } from '@/components/ui/fields';
-import { Screen } from '@/components/ui/screen';
+import { PrimaryButton, Screen, SecondaryButton, TextField } from '@/ui';
 
 /** Mock auth preserves the intended journey while deliberately making no network call. */
 export default function PhoneScreen() {

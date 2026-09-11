@@ -1,9 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Text } from 'react-native';
-import { PrimaryButton, SecondaryButton } from '@/components/ui/buttons';
-import { TextField } from '@/components/ui/fields';
-import { Screen } from '@/components/ui/screen';
+import { PrimaryButton, Screen, SecondaryButton, TextField } from '@/ui';
 
 export default function OtpScreen() {
   const router = useRouter(); const [otp, setOtp] = useState('123456');

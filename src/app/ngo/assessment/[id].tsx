@@ -1,9 +1,7 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { PrimaryButton, SecondaryButton } from '@/components/ui/buttons';
-import { TextField } from '@/components/ui/fields';
-import { Screen } from '@/components/ui/screen';
+import { PrimaryButton, Screen, SecondaryButton, TextField } from '@/ui';
 import { AppColors, Layout } from '@/constants/theme';
 import { useApp } from '@/context/app-context';
 const labels = ['Food appears edible', 'No obvious visible spoilage', 'Packaging is acceptable', 'Food is within a reasonable time window', 'Quantity roughly matches the listing', 'Pickup conditions are acceptable'];

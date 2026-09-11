@@ -1,6 +1,5 @@
 import { DonationCard } from "@/components/donations/donation-card";
-import { PrimaryButton, SecondaryButton } from "@/components/ui/buttons";
-import { Screen } from "@/components/ui/screen";
+import { PrimaryButton, Screen, SecondaryButton } from "@/ui";
 import { AppColors, Layout } from "@/constants/theme";
 import { useApp } from "@/context/app-context";
 import { useRouter } from "expo-router";
