@@ -1,11 +1,223 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Badge, Button, Card, colors, Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle, Input, ListItem, Screen, SegmentedControl, Sheet, Skeleton, spacing, toast, typography } from '@/ui';
+import {
+  Badge,
+  Button,
+  Card,
+  colors,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogTitle,
+  Input,
+  ListItem,
+  Screen,
+  SegmentedControl,
+  Sheet,
+  Skeleton,
+  spacing,
+  toast,
+  typography,
+} from "@/ui";
+import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 /** Temporary visual testbed: every primitive can be inspected without entering a rescue workflow. */
 export default function UiShowcaseScreen() {
-  const [dialogOpen, setDialogOpen] = useState(false); const [sheetOpen, setSheetOpen] = useState(false); const [mode, setMode] = useState<'nearby' | 'urgent' | 'accepted'>('nearby'); const [text, setText] = useState('');
-  return <Screen eyebrow="Development preview" title="Vaata UI kitchen sink" subtitle="A visual testing ground for the reusable native component system."><Section title="Typography"><Text style={typography.display}>Food deserves a next stop.</Text><Text style={typography.heading2}>Clear, warm, grounded.</Text><Text style={typography.body}>The base language is intentionally quiet so the rescue workflow stays easy to understand.</Text><Text style={typography.caption}>CAPTION · Updated today</Text></Section><Section title="Buttons"><View style={styles.stack}><Button label="Primary action" fullWidth /><Button label="Secondary action" variant="secondary" fullWidth /><Button label="Outline action" variant="outline" fullWidth /><Button label="Ghost action" variant="ghost" fullWidth /><Button label="Danger action" variant="danger" fullWidth /><Button label="Loading" loading fullWidth /></View></Section><Section title="Inputs"><Input label="Food title" value={text} onChangeText={setText} placeholder="e.g. Vegetable meal boxes" helperText="Use a name volunteers will recognise." /><Input label="Pickup contact" placeholder="Phone number" errorText="A contact number is needed." /></Section><Section title="Badges"><View style={styles.wrap}><Badge>NEUTRAL</Badge><Badge variant="primary">VEG</Badge><Badge variant="success">DELIVERED</Badge><Badge variant="warning">URGENT</Badge><Badge variant="danger">CANCELLED</Badge><Badge variant="outline">NGO</Badge></View></Section><Section title="Cards"><Card variant="flat"><Text style={typography.heading3}>Flat card</Text><Text style={styles.muted}>For grouped content with no elevated priority.</Text></Card><Card variant="outlined"><Text style={typography.heading3}>Outlined card</Text><Text style={styles.muted}>Useful for structured details and listings.</Text></Card><Card variant="raised"><Text style={typography.heading3}>Raised card</Text><Text style={styles.muted}>Reserved for floating or important content.</Text></Card></Section><Section title="Segmented control"><SegmentedControl options={[{ label: 'Nearby', value: 'nearby' }, { label: 'Urgent', value: 'urgent' }, { label: 'Accepted', value: 'accepted' }]} value={mode} onValueChange={setMode} /><Text style={styles.muted}>Selected: {mode}</Text></Section><Section title="List items"><Card variant="outlined" padding="md"><ListItem title="Pickup location" description="Shivajinagar · 1.2 km away" leading={<Badge variant="primary">01</Badge>} trailing={<Text style={styles.chevron}>›</Text>} onPress={() => toast.info('Pickup item selected')} /><View style={styles.divider} /><ListItem title="Quality check" description="Complete before collection" trailing={<Badge variant="warning">PENDING</Badge>} /></Card></Section><Section title="Skeletons"><Card variant="flat"><View style={styles.skeletonRow}><Skeleton circle width={42} height={42} /><View style={styles.skeletonCopy}><Skeleton width="72%" /><Skeleton width="48%" height={10} /></View></View></Card></Section><Section title="Feedback surfaces"><View style={styles.stack}><Button label="Show success toast" variant="outline" onPress={() => toast.success('Donation posted')} fullWidth /><Button label="Open dialog" variant="outline" onPress={() => setDialogOpen(true)} fullWidth /><Button label="Open bottom sheet" variant="outline" onPress={() => setSheetOpen(true)} fullWidth /></View></Section><Dialog open={dialogOpen} onOpenChange={setDialogOpen}><DialogContent><DialogTitle>Confirm collection?</DialogTitle><DialogDescription>The volunteer will be assigned this mock pickup plan.</DialogDescription><DialogFooter><Button label="Cancel" variant="ghost" size="sm" onPress={() => setDialogOpen(false)} /><Button label="Confirm" size="sm" onPress={() => { setDialogOpen(false); toast.success('Pickup confirmed'); }} /></DialogFooter></DialogContent></Dialog><Sheet open={sheetOpen} onOpenChange={setSheetOpen}><Text style={typography.heading2}>Quick actions</Text><Text style={styles.muted}>A lightweight bottom sheet for concise choices.</Text><Button label="Close sheet" variant="outline" onPress={() => setSheetOpen(false)} fullWidth /></Sheet></Screen>;
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [mode, setMode] = useState<"nearby" | "urgent" | "accepted">("nearby");
+  const [text, setText] = useState("");
+  return (
+    <Screen
+      eyebrow="Development preview"
+      title="Vaata UI kitchen sink"
+      subtitle="A visual testing ground for the reusable native component system."
+    >
+      <Section title="Typography">
+        <Text style={typography.display}>Food deserves a next stop.</Text>
+        <Text style={typography.heading2}>Clear, warm, grounded.</Text>
+        <Text style={typography.body}>
+          The base language is intentionally quiet so the rescue workflow stays
+          easy to understand.
+        </Text>
+        <Text style={typography.caption}>CAPTION · Updated today</Text>
+      </Section>
+      <Section title="Buttons">
+        <View style={styles.stack}>
+          <Button label="Primary action" fullWidth />
+          <Button label="Secondary action" variant="secondary" fullWidth />
+          <Button label="Outline action" variant="outline" fullWidth />
+          <Button label="Ghost action" variant="ghost" fullWidth />
+          <Button label="Danger action" variant="danger" fullWidth />
+          <Button label="Loading" loading fullWidth />
+        </View>
+      </Section>
+      <Section title="Inputs">
+        <Input
+          label="Food title"
+          value={text}
+          onChangeText={setText}
+          placeholder="e.g. Vegetable meal boxes"
+          helperText="Use a name volunteers will recognise."
+        />
+        <Input
+          label="Pickup contact"
+          placeholder="Phone number"
+          errorText="A contact number is needed."
+        />
+      </Section>
+      <Section title="Badges">
+        <View style={styles.wrap}>
+          <Badge>NEUTRAL</Badge>
+          <Badge variant="primary">VEG</Badge>
+          <Badge variant="success">DELIVERED</Badge>
+          <Badge variant="warning">URGENT</Badge>
+          <Badge variant="danger">CANCELLED</Badge>
+          <Badge variant="outline">NGO</Badge>
+        </View>
+      </Section>
+      <Section title="Cards">
+        <Card variant="flat">
+          <Text style={typography.heading3}>Flat card</Text>
+          <Text style={styles.muted}>
+            For grouped content with no elevated priority.
+          </Text>
+        </Card>
+        <Card variant="outlined">
+          <Text style={typography.heading3}>Outlined card</Text>
+          <Text style={styles.muted}>
+            Useful for structured details and listings.
+          </Text>
+        </Card>
+        <Card variant="raised">
+          <Text style={typography.heading3}>Raised card</Text>
+          <Text style={styles.muted}>
+            Reserved for floating or important content.
+          </Text>
+        </Card>
+      </Section>
+      <Section title="Segmented control">
+        <SegmentedControl
+          options={[
+            { label: "Nearby", value: "nearby" },
+            { label: "Urgent", value: "urgent" },
+            { label: "Accepted", value: "accepted" },
+          ]}
+          value={mode}
+          onValueChange={setMode}
+        />
+        <Text style={styles.muted}>Selected: {mode}</Text>
+      </Section>
+      <Section title="List items">
+        <Card variant="outlined" padding="md">
+          <ListItem
+            title="Pickup location"
+            description="Shivajinagar · 1.2 km away"
+            leading={<Badge variant="primary">01</Badge>}
+            trailing={<Text style={styles.chevron}>›</Text>}
+            onPress={() => toast.info("Pickup item selected")}
+          />
+          <View style={styles.divider} />
+          <ListItem
+            title="Quality check"
+            description="Complete before collection"
+            trailing={<Badge variant="warning">PENDING</Badge>}
+          />
+        </Card>
+      </Section>
+      <Section title="Skeletons">
+        <Card variant="flat">
+          <View style={styles.skeletonRow}>
+            <Skeleton circle width={42} height={42} />
+            <View style={styles.skeletonCopy}>
+              <Skeleton width="72%" />
+              <Skeleton width="48%" height={10} />
+            </View>
+          </View>
+        </Card>
+      </Section>
+      <Section title="Feedback surfaces">
+        <View style={styles.stack}>
+          <Button
+            label="Show success toast"
+            variant="outline"
+            onPress={() => toast.success("Donation posted")}
+            fullWidth
+          />
+          <Button
+            label="Open dialog"
+            variant="outline"
+            onPress={() => setDialogOpen(true)}
+            fullWidth
+          />
+          <Button
+            label="Open bottom sheet"
+            variant="outline"
+            onPress={() => setSheetOpen(true)}
+            fullWidth
+          />
+        </View>
+      </Section>
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogTitle>Confirm collection?</DialogTitle>
+          <DialogDescription>
+            The volunteer will be assigned this mock pickup plan.
+          </DialogDescription>
+          <DialogFooter>
+            <Button
+              label="Cancel"
+              variant="ghost"
+              size="sm"
+              onPress={() => setDialogOpen(false)}
+            />
+            <Button
+              label="Confirm"
+              size="sm"
+              onPress={() => {
+                setDialogOpen(false);
+                toast.success("Pickup confirmed");
+              }}
+            />
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+        <Text style={typography.heading2}>Quick actions</Text>
+        <Text style={styles.muted}>
+          A lightweight bottom sheet for concise choices.
+        </Text>
+        <Button
+          label="Close sheet"
+          variant="outline"
+          onPress={() => setSheetOpen(false)}
+          fullWidth
+        />
+      </Sheet>
+    </Screen>
+  );
 }
-function Section({ title, children }: { title: string; children: React.ReactNode }) { return <View style={styles.section}><Text style={typography.heading3}>{title}</Text>{children}</View>; }
-const styles = StyleSheet.create({ section: { gap: spacing.md }, stack: { gap: spacing.sm }, wrap: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm }, muted: { ...typography.body, color: colors.textMuted }, divider: { height: 1, backgroundColor: colors.border }, chevron: { fontSize: 26, color: colors.primary }, skeletonRow: { flexDirection: 'row', gap: spacing.md, alignItems: 'center' }, skeletonCopy: { flex: 1, gap: spacing.sm } });
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <View style={styles.section}>
+      <Text style={typography.heading3}>{title}</Text>
+      {children}
+    </View>
+  );
+}
+const styles = StyleSheet.create({
+  section: { gap: spacing.md },
+  stack: { gap: spacing.sm },
+  wrap: { flexDirection: "row", flexWrap: "wrap", gap: spacing.sm },
+  muted: { ...typography.body, color: colors.textMuted },
+  divider: { height: 1, backgroundColor: colors.border },
+  chevron: { fontSize: 26, color: colors.primary },
+  skeletonRow: { flexDirection: "row", gap: spacing.md, alignItems: "center" },
+  skeletonCopy: { flex: 1, gap: spacing.sm },
+});

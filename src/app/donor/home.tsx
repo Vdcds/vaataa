@@ -1,98 +1,11 @@
-import { DonationCard } from "@/components/donations/donation-card";
-import { PrimaryButton, Screen, SecondaryButton } from "@/ui";
-import { AppColors, Layout } from "@/constants/theme";
-import { useApp } from "@/context/app-context";
-import { useRouter } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { useRouter } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { DonationCard } from '@/components/donations/donation-card';
+import { useApp } from '@/context/app-context';
+import { Button, colors, radius, Screen, ScreenReveal, shadows, spacing, typography, VaataIcon } from '@/ui';
+
 export default function DonorHome() {
-  const router = useRouter();
-  const { donations, setRole } = useApp();
-  const mine = donations.filter((item) => item.donorId === "current-donor");
-  /** Enables one-device end-to-end review while real account switching is not built. */
-  const openVolunteerMock = () => {
-    setRole("volunteer");
-    router.replace("/ngo/home" as never);
-  };
-  return (
-    <Screen
-      eyebrow="Good afternoon"
-      title="Make surplus count."
-      subtitle="A few clear details can help food get to the right place faster."
-    >
-      <View style={styles.impact}>
-        <Text style={styles.impactNumber}>0</Text>
-        <View>
-          <Text style={styles.impactTitle}>meals rescued by you</Text>
-          <Text style={styles.impactCopy}>
-            Your community impact starts here.
-          </Text>
-        </View>
-      </View>
-      <PrimaryButton
-        label="Donate food"
-        onPress={() => router.push("/donor/donate" as never)}
-      />
-      <SecondaryButton
-        label="Preview volunteer workflow"
-        onPress={openVolunteerMock}
-      />
-      <View style={styles.sectionHead}>
-        <Text style={styles.section}>Your activity</Text>
-        {mine.length > 0 && (
-          <SecondaryButton
-            label="View all"
-            onPress={() => router.push("/donor/activity" as never)}
-          />
-        )}
-      </View>
-      {mine.length ? (
-        mine
-          .slice(0, 2)
-          .map((donation) => (
-            <DonationCard
-              key={donation.id}
-              donation={donation}
-              onPress={() =>
-                router.push(`/donor/activity/${donation.id}` as never)
-              }
-            />
-          ))
-      ) : (
-        <View style={styles.empty}>
-          <Text style={styles.emptyTitle}>No food posted yet</Text>
-          <Text style={styles.emptyCopy}>
-            When you post a donation, its rescue progress will appear here.
-          </Text>
-        </View>
-      )}
-    </Screen>
-  );
+  const router = useRouter(); const { donations } = useApp(); const mine = donations.filter((item) => item.donorId === 'current-donor');
+  return <Screen><ScreenReveal><View style={styles.header}><View style={styles.greetingRow}><View style={styles.greetingIcon}><VaataIcon name="food" size={20} color={colors.primary} /></View><Text style={styles.greeting}>Good afternoon</Text></View><Text style={styles.title}>Give good food a next stop.</Text><Text style={styles.subtitle}>A few clear details are enough to start a rescue near you.</Text></View></ScreenReveal><ScreenReveal delay={70}><View style={styles.rescuePanel}><View style={styles.panelTopline}><Text style={styles.panelEyebrow}>Ready when you are</Text><View style={styles.panelIcon}><VaataIcon name="share" size={23} color={colors.frost} /></View></View><View style={styles.panelCopy}><Text style={styles.panelTitle}>Share food, not waste.</Text><Text style={styles.panelBody}>Choose a recipient first. Then we’ll guide the handoff.</Text></View><Button label="Start a donation" left={<VaataIcon name="food" size={19} color={colors.text} />} right={<VaataIcon name="arrow" size={17} color={colors.text} />} variant="secondary" size="lg" fullWidth onPress={() => router.push('/donor/donate' as never)} /></View></ScreenReveal><ScreenReveal delay={130}><View style={styles.activityHeader}><View><Text style={styles.section}>Your handoffs</Text><Text style={styles.sectionCopy}>{mine.length ? 'Follow each donation from posting to delivery.' : 'Your first donation will appear here.'}</Text></View>{mine.length > 0 && <Pressable accessibilityRole="button" accessibilityLabel="View all donations" hitSlop={spacing.sm} pressRetentionOffset={spacing.lg} android_ripple={{ color: colors.ripple }} onPress={() => router.push('/donor/activity' as never)} style={({ pressed }) => [styles.viewAllButton, pressed && styles.viewAllPressed]}><Text style={styles.viewAll}>View all</Text><VaataIcon name="arrow" size={15} /></Pressable>}</View>{mine.length ? <View style={styles.activityList}>{mine.slice(0, 2).map((donation) => <DonationCard key={donation.id} donation={donation} onPress={() => router.push(`/donor/activity/${donation.id}` as never)} />)}</View> : <View style={styles.empty}><View style={styles.emptyIcon}><VaataIcon name="route" size={22} color={colors.primary} /></View><View style={styles.emptyCopyGroup}><Text style={styles.emptyTitle}>Nothing in motion yet</Text><Text style={styles.emptyCopy}>When you post food, you’ll see who accepted it, the planned pickup, and the delivery update here.</Text></View></View>}</ScreenReveal></Screen>;
 }
-const styles = StyleSheet.create({
-  impact: {
-    padding: 18,
-    borderRadius: Layout.cardRadius,
-    backgroundColor: AppColors.primary,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
-  },
-  impactNumber: { color: "#fff", fontSize: 38, fontWeight: "900" },
-  impactTitle: { color: "#fff", fontSize: 15, fontWeight: "800" },
-  impactCopy: { color: "#DDEBDD", fontSize: 13, marginTop: 3 },
-  sectionHead: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  section: { color: AppColors.ink, fontSize: 18, fontWeight: "800" },
-  empty: {
-    padding: 22,
-    borderRadius: Layout.cardRadius,
-    backgroundColor: AppColors.surfaceMuted,
-    gap: 5,
-  },
-  emptyTitle: { color: AppColors.ink, fontWeight: "800", fontSize: 16 },
-  emptyCopy: { color: AppColors.muted, lineHeight: 20 },
-});
+const styles = StyleSheet.create({ header: { paddingTop: spacing.xl, gap: spacing.sm }, greetingRow: { flexDirection: 'row', gap: spacing.sm, alignItems: 'center' }, greetingIcon: { height: 34, width: 34, borderRadius: radius.md, backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center' }, greeting: { ...typography.label, color: colors.primary }, title: { ...typography.display, maxWidth: 340 }, subtitle: { ...typography.body, color: colors.textMuted, maxWidth: 340 }, rescuePanel: { gap: spacing.xl, marginTop: spacing.sm, padding: spacing.xl, borderRadius: radius.lg, backgroundColor: colors.text, ...shadows.md }, panelTopline: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, panelIcon: { height: 42, width: 42, borderRadius: radius.md, backgroundColor: colors.surfaceInverse, alignItems: 'center', justifyContent: 'center' }, panelEyebrow: { ...typography.label, color: colors.frost }, panelCopy: { gap: spacing.sm }, panelTitle: { ...typography.heading2, color: colors.textInverse }, panelBody: { ...typography.body, color: colors.textInverseMuted, maxWidth: 290 }, activityHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', gap: spacing.md, marginTop: spacing.md }, section: typography.heading2, sectionCopy: { ...typography.caption, marginTop: spacing.xs }, viewAllButton: { minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: spacing.xs, paddingHorizontal: spacing.sm, borderRadius: radius.sm }, viewAllPressed: { opacity: 0.68 }, viewAll: { ...typography.label, color: colors.primary }, activityList: { gap: spacing.sm }, empty: { flexDirection: 'row', gap: spacing.md, paddingVertical: spacing.xl, paddingRight: spacing.lg, borderTopWidth: 1, borderTopColor: colors.border }, emptyIcon: { width: 44, height: 44, borderRadius: radius.md, backgroundColor: colors.primarySoft, justifyContent: 'center', alignItems: 'center' }, emptyCopyGroup: { flex: 1, gap: spacing.xs }, emptyTitle: typography.heading3, emptyCopy: { ...typography.body, color: colors.textMuted } });

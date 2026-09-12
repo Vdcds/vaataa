@@ -13,11 +13,12 @@ const variants: Record<ButtonVariant, { container: ViewStyle; label: { color: st
   ghost: { container: { backgroundColor: 'transparent' }, label: { color: colors.text } },
   danger: { container: { backgroundColor: colors.danger }, label: { color: colors.textInverse } },
 };
-const sizes: Record<ButtonSize, ViewStyle> = { sm: { minHeight: 36, paddingHorizontal: spacing.md }, md: { minHeight: 48, paddingHorizontal: spacing.lg }, lg: { minHeight: 56, paddingHorizontal: spacing.xl } };
+const sizes: Record<ButtonSize, ViewStyle> = { sm: { minHeight: 44, paddingHorizontal: spacing.md }, md: { minHeight: 48, paddingHorizontal: spacing.lg }, lg: { minHeight: 56, paddingHorizontal: spacing.xl } };
+const ripples: Record<ButtonVariant, string> = { primary: colors.rippleInverse, secondary: colors.rippleDark, outline: colors.ripple, ghost: colors.ripple, danger: colors.rippleInverse };
 
 /** A tactile, accessible action primitive without hiding native Pressable behavior. */
 export function Button({ label, variant = 'primary', size = 'md', loading, left, right, fullWidth, disabled, style, accessibilityLabel, ...props }: ButtonProps) {
   const inactive = disabled || loading;
-  return <Pressable {...props} accessibilityRole="button" accessibilityLabel={accessibilityLabel ?? label} disabled={inactive} style={({ pressed }) => [styles.base, sizes[size], variants[variant].container, fullWidth && styles.full, (pressed || inactive) && styles.pressed, style]}>{loading ? <ActivityIndicator color={variants[variant].label.color} /> : <>{left}<Text style={[typography.button, variants[variant].label]}>{label}</Text>{right}</>}</Pressable>;
+  return <Pressable {...props} accessibilityRole="button" accessibilityLabel={accessibilityLabel ?? label} disabled={inactive} android_ripple={{ color: ripples[variant] }} pressRetentionOffset={spacing.lg} hitSlop={size === 'sm' ? spacing.xs : undefined} style={({ pressed }) => [styles.base, sizes[size], variants[variant].container, fullWidth && styles.full, (pressed || inactive) && styles.pressed, style]}>{loading ? <ActivityIndicator color={variants[variant].label.color} /> : <>{left}<Text style={[typography.button, variants[variant].label]}>{label}</Text>{right}</>}</Pressable>;
 }
-const styles = StyleSheet.create({ base: { borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: spacing.sm }, full: { alignSelf: 'stretch' }, pressed: { opacity: 0.78, transform: [{ translateY: 1 }] } });
+const styles = StyleSheet.create({ base: { borderRadius: radius.md, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: spacing.sm }, full: { alignSelf: 'stretch' }, pressed: { opacity: 0.78 } });

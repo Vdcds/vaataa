@@ -1,4 +1,4 @@
-import type { Donation, DonationDraft } from '@/types/domain';
+import type { Donation, DonationDestination, DonationDraft, DonorKind } from '@/types/domain';
 
 /** Realistic local data keeps the prototype useful before a backend exists. */
 export const mockDonations: Donation[] = [
@@ -6,5 +6,13 @@ export const mockDonations: Donation[] = [
   { id: 'VAA-2083', donorId: 'donor-family', donorName: 'Mehta family', donorType: 'Family function', title: 'Fresh biryani and raita', category: 'cooked_meal', diet: 'non_veg', quantity: '20 servings', estimatedServings: 20, preparedAt: 'Today, 1:00 PM', storageMethod: 'Covered steel containers', pickupAddress: 'B-402, Park View, Lane 7, Kalyani Nagar', pickupArea: 'Viman Nagar', availableFrom: 'Now', availableUntil: 'Today, 6:00 PM', notes: 'Please bring suitable containers for transfer.', images: [], status: 'posted', createdAt: '2026-09-11T13:15:00Z', updatedAt: '2026-09-11T13:15:00Z' },
   { id: 'VAA-2081', donorId: 'donor-cafe', donorName: 'Mitti Café', donorType: 'Café', title: 'Sealed breads and snacks', category: 'packaged', diet: 'veg', quantity: '4 cartons', estimatedServings: 48, preparedAt: 'Today, 10:00 AM', storageMethod: 'Sealed packaged food', pickupAddress: 'Shop 8, Aundh ITI Road', pickupArea: 'Aundh', availableFrom: 'Now', availableUntil: 'Today, 7:30 PM', notes: 'All items are within date and sealed.', images: [], status: 'accepted', createdAt: '2026-09-11T10:10:00Z', updatedAt: '2026-09-11T12:10:00Z' },
 ];
-export const emptyDraft: DonationDraft = { title: '', category: 'cooked_meal', diet: 'veg', quantity: '', estimatedServings: '', preparedAt: 'Today', storageMethod: 'Room temperature', notes: '', pickupAddress: '', pickupArea: 'Kothrud', availableFrom: 'Now', availableUntil: 'Today, 7:00 PM', contactInstructions: '' };
+/** Recipient choices intentionally feel like local civic partners, not food-shop listings. */
+export const mockDonationDestinations: DonationDestination[] = [
+  { id: 'dst-saksham', name: 'Saksham Community Kitchen', organisationType: 'Community kitchen', area: 'Koregaon Park', distanceLabel: '3.1 km away', accepts: 'Cooked veg meals and packaged food', availableUntil: 'Accepting until 7:30 PM', capacityLabel: 'Can receive 80 portions', urgency: 'open' },
+  { id: 'dst-aasra', name: 'Aasra Night Shelter', organisationType: 'Shelter', area: 'Shivajinagar', distanceLabel: '1.8 km away', accepts: 'Fresh meals for evening service', availableUntil: 'Pickup needed before 6:45 PM', capacityLabel: 'Needs up to 45 portions', urgency: 'limited' },
+  { id: 'dst-samvad', name: 'Samvad Food Circle', organisationType: 'NGO', area: 'Kothrud', distanceLabel: '4.2 km away', accepts: 'Sealed meals, bakery and produce', availableUntil: 'Accepting until 8:00 PM', capacityLabel: 'Can receive 120 portions', urgency: 'open' },
+  { id: 'dst-hadapsar', name: 'Hadapsar Distribution Point', organisationType: 'Distribution point', area: 'Hadapsar', distanceLabel: '5.6 km away', accepts: 'Bulk event donations', availableUntil: 'Pickup slots until 7:00 PM', capacityLabel: 'Best for 50+ portions', urgency: 'open' },
+];
+export const donorKindLabels: Record<DonorKind, string> = { individual: 'Individual', party: 'Party or event', organisation: 'Organisation', group: 'Community group' };
+export const emptyDraft: DonationDraft = { donorKind: null, destinationId: null, destinationName: '', title: '', category: 'cooked_meal', diet: 'veg', quantity: '', estimatedServings: '', preparedAt: 'Today', storageMethod: 'Room temperature', notes: '', pickupAddress: '', pickupArea: 'Kothrud', availableFrom: 'Now', availableUntil: 'Today, 7:00 PM', contactInstructions: '' };
 export const categoryLabels = { cooked_meal: 'Cooked meal', snacks: 'Snacks', bakery: 'Bakery', packaged: 'Packaged food', produce: 'Fruits & vegetables', raw_ingredients: 'Raw ingredients', other: 'Other' } as const;
